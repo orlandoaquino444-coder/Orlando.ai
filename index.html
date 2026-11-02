@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#173f35">
+<title>ProfeFácil AI — Gestión académica</title>
+<style>
+:root{--bg:#f3f6f4;--panel:#fff;--ink:#172b25;--muted:#687a72;--line:#dce6e0;--green:#176b50;--green2:#e7f3ed;--gold:#d79a31;--red:#b74444;--shadow:0 8px 28px #183d2b12}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:10px;padding:10px 14px;background:var(--green);color:white;font-weight:650}button.secondary{background:#edf3ef;color:var(--ink);border:1px solid var(--line)}button.danger{background:#fff0f0;color:var(--red);border:1px solid #f0d2d2}button:disabled{opacity:.5;cursor:not-allowed}input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);outline-color:#79aa91}textarea{min-height:90px;resize:vertical}label{display:block;font-size:13px;font-weight:650;color:#40564c;margin:10px 0 5px}.muted,.hint{color:var(--muted);font-size:13px}.top{background:#173f35;color:#fff;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:5;box-shadow:0 3px 15px #102d251f}.brand{font-size:19px;font-weight:800;letter-spacing:-.4px}.brand span{color:#a8ddbd}.top small{color:#c7d9d0}.wrap{max-width:1250px;margin:22px auto;padding:0 16px}.layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:18px}.side,.panel,.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow)}.side{padding:12px;height:max-content;position:sticky;top:80px}.nav{display:flex;flex-direction:column;gap:5px}.nav button{text-align:left;background:transparent;color:#41564d;font-weight:600}.nav button.active,.nav button:hover{background:var(--green2);color:var(--green)}.content{min-width:0}.panel{padding:20px;margin-bottom:16px}.panel h1,.panel h2,.panel h3{margin:0 0 8px;letter-spacing:-.3px}.panel h1{font-size:24px}.panel h2{font-size:19px}.panel h3{font-size:16px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.field{min-width:0}.row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.between{justify-content:space-between}.stat{padding:15px;border-radius:12px;background:#f5f8f6;border:1px solid var(--line)}.stat b{display:block;font-size:25px}.list{display:grid;gap:9px}.item{border:1px solid var(--line);border-radius:11px;padding:12px;display:flex;justify-content:space-between;gap:12px;align-items:center}.item .sub{font-size:13px;color:var(--muted)}.item-actions{display:flex;gap:6px;flex-wrap:wrap}.item-actions button{padding:7px 10px;font-size:12px}.tag{display:inline-block;padding:3px 8px;border-radius:20px;background:var(--green2);color:var(--green);font-size:12px;font-weight:700}.empty{padding:25px;text-align:center;color:var(--muted);border:1px dashed #cbd9d1;border-radius:12px}.hidden{display:none!important}.notice{padding:11px 13px;border-radius:10px;background:#fff8e9;color:#76551a;border:1px solid #f0dfb8;font-size:13px;margin:12px 0}.success{background:#eaf6ee;color:#21603e;border-color:#cce8d5}.error{background:#fff0f0;color:#963b3b;border-color:#f0cccc}.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}.tabs button{background:#eef3ef;color:#43564d}.tabs button.active{background:var(--green);color:#fff}.question{border:1px solid var(--line);border-radius:12px;padding:13px;margin:10px 0}.question-head{display:flex;justify-content:space-between;align-items:center}.auth{max-width:460px;margin:7vh auto;padding:25px}.auth .brand{color:var(--green);margin-bottom:12px}.footer{padding:15px;color:var(--muted);font-size:12px;text-align:center}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}th{color:var(--muted);font-size:12px}.pill{border-radius:30px;padding:4px 9px;background:#f0f3f1;font-size:12px}.hr{border:0;border-top:1px solid var(--line);margin:17px 0}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.side{position:static}.nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.top{padding:12px 15px}.grid3{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.grid,.grid3{grid-template-columns:1fr}.panel{padding:15px}.top small{display:none}.item{align-items:flex-start;flex-direction:column}.item-actions{width:100%}.item-actions button{flex:1}}
+</style>
+</head>
+<body>
+<header class="top"><div><div class="brand">ProfeFácil <span>AI</span></div><small>Tu espacio de gestión académica</small></div><div class="row"><span id="userLabel" class="muted" style="color:#d7e7df"></span><button id="logoutBtn" class="secondary hidden">Cerrar sesión</button></div></header>
+
+<section id="authView" class="panel auth">
+  <div class="brand">ProfeFácil <span>AI</span></div>
+  <h1>Bienvenido/a</h1><p class="muted">Inicia sesión o crea tu cuenta para guardar tu información académica.</p>
+  <div id="authNotice" class="notice hidden"></div>
+  <label>Correo electrónico</label><input id="authEmail" type="email" autocomplete="email" placeholder="profesor@correo.com">
+  <label>Contraseña</label><input id="authPassword" type="password" autocomplete="current-password" placeholder="Mínimo 6 caracteres">
+  <div class="row" style="margin-top:15px"><button id="loginBtn">Iniciar sesión</button><button id="registerBtn" class="secondary">Crear cuenta</button></div>
+  <button id="resetBtn" class="secondary" style="margin-top:8px">Recuperar contraseña</button>
+  <div class="notice">Necesitas conexión a Internet y que Authentication y Cloud Firestore estén habilitados en tu proyecto Firebase. Tus datos se guardan asociados a tu cuenta.</div>
+</section>
+
+<main id="appView" class="wrap hidden">
+<div class="layout">
+<aside class="side">
+  <div class="muted" style="padding:6px 10px">MENÚ PRINCIPAL</div>
+  <nav class="nav" id="nav">
+    <button data-page="home" class="active">⌂ Inicio</button>
+    <button data-page="students">♙ Estudiantes</button>
+    <button data-page="grades">▤ Calificaciones</button>
+    <button data-page="attendance">✓ Asistencias</button>
+    <button data-page="tasks">▣ Tareas</button>
+    <button data-page="observations">✎ Observaciones</button>
+    <button data-page="history">◷ Historial y consultas</button>
+    <button data-page="exams">▤ Exámenes y actividades</button>
+    <button data-page="settings">⚙ Configuración</button>
+  </nav>
+  <hr class="hr"><label>Colegio activo</label><select id="schoolSelect"></select>
+  <div class="row" style="margin-top:8px"><input id="newSchool" placeholder="Nuevo colegio"><button id="addSchoolBtn">+</button></div>
+  <p class="hint">Los registros se organizan por colegio y usuario.</p>
+</aside>
+<section class="content" id="pageContent"></section>
+</div>
+<div class="footer">ProfeFácil AI · Guarda tus registros y realiza copias de seguridad periódicas.</div>
+</main>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+import { getFirestore, collection, doc, getDocs, setDoc, deleteDoc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBtnzA8Uf5iomh_r9LRuymIVs6zE7_DCqg",
+  authDomain: "profefacil-9318a.firebaseapp.com",
+  projectId: "profefacil-9318a",
+  storageBucket: "profefacil-9318a.firebasestorage.app",
+  messagingSenderId: "830708638867",
+  appId: "1:830708638867:web:9367c43be799372e185966",
+  measurementId: "G-19V3G8BTJQ"
+};
+const $ = id => document.getElementById(id);
+const app = initializeApp(firebaseConfig), auth = getAuth(app), db = getFirestore(app);
+let user=null, schoolId="", schools=[], data={students:[],grades:[],attendance:[],tasks:[],observations:[],exams:[]}, page="home", examQuestions=[];
+const types = {students:"estudiantes",grades:"calificaciones",attendance:"asistencias",tasks:"tareas",observations:"observaciones",exams:"examenes"};
+const esc = s => String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const today=()=>new Date().toISOString().slice(0,10);
+function notice(el,msg,kind=""){el.textContent=msg;el.className="notice "+kind;el.classList.remove("hidden")}
+function hide(el){el.classList.add("hidden")}
+function path(col){return collection(db,"users",user.uid,"schools",schoolId,col)}
+async function loadSchools(){
+ const snap=await getDocs(collection(db,"users",user.uid,"schools"));
+ schools=snap.docs.map(d=>({id:d.id,...d.data()}));
+ if(!schools.length){const ref=doc(collection(db,"users",user.uid,"schools"));await setDoc(ref,{name:"Mi colegio",createdAt:serverTimestamp()});schools=[{id:ref.id,name:"Mi colegio"}]}
+ schoolId=schools[0].id;renderSchools();await loadAll();
+}
+function renderSchools(){$("schoolSelect").innerHTML=schools.map(s=>`<option value="${esc(s.id)}" ${s.id===schoolId?"selected":""}>${esc(s.name)}</option>`).join("")}
+async function loadAll(){
+ data={students:[],grades:[],attendance:[],tasks:[],observations:[],exams:[]};
+ for(const key of Object.keys(data)){const snap=await getDocs(path(types[key]));data[key]=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.date||b.createdAt?.seconds||"").toString().localeCompare((a.date||a.createdAt?.seconds||"").toString()))}
+ render();
+}
+async function save(key,obj){const id=obj.id||crypto.randomUUID();await setDoc(doc(path(types[key]),id),{...obj,id,updatedAt:serverTimestamp()},{merge:true});await loadAll()}
+async function remove(key,id){if(!confirm("¿Eliminar este registro? Esta acción no se puede deshacer."))return;await deleteDoc(doc(path(types[key]),id));await loadAll()}
+function studentName(id){return data.students.find(s=>s.id===id)?.name||"Estudiante eliminado"}
+function navTo(p){page=p;document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===p));render()}
+$("nav").addEventListener("click",e=>{const b=e.target.closest("button[data-page]");if(b)navTo(b.dataset.page)});
+$("schoolSelect").addEventListener("change",async e=>{schoolId=e.target.value;await loadAll()});
+$("addSchoolBtn").onclick=async()=>{const name=$("newSchool").value.trim();if(!name)return;const ref=doc(collection(db,"users",user.uid,"schools"));await setDoc(ref,{name,createdAt:serverTimestamp()});schools.push({id:ref.id,name});schoolId=ref.id;$("newSchool").value="";renderSchools();await loadAll()};
+$("loginBtn").onclick=async()=>{try{await signInWithEmailAndPassword(auth,$("authEmail").value.trim(),$("authPassword").value)}catch(e){notice($("authNotice"),friendly(e),"error")}};
+$("registerBtn").onclick=async()=>{try{await createUserWithEmailAndPassword(auth,$("authEmail").value.trim(),$("authPassword").value)}catch(e){notice($("authNotice"),friendly(e),"error")}};
+$("resetBtn").onclick=async()=>{try{await sendPasswordResetEmail(auth,$("authEmail").value.trim());notice($("authNotice"),"Te enviamos un enlace de recuperación si el correo está registrado.","success")}catch(e){notice($("authNotice"),friendly(e),"error")}};
+$("logoutBtn").onclick=()=>signOut(auth);
+function friendly(e){return ({ "auth/invalid-credential":"Correo o contraseña incorrectos.","auth/email-already-in-use":"Ese correo ya tiene una cuenta.","auth/weak-password":"La contraseña debe tener al menos 6 caracteres.","auth/invalid-email":"El correo no es válido.","permission-denied":"Firebase rechazó el acceso. Revisa las reglas de Firestore."})[e.code]||e.message||"Ocurrió un error."}
+onAuthStateChanged(auth,async u=>{user=u;if(u){$("authView").classList.add("hidden");$("appView").classList.remove("hidden");$("logoutBtn").classList.remove("hidden");$("userLabel").textContent=u.email||"";try{await loadSchools()}catch(e){alert(friendly(e))}}else{$("authView").classList.remove("hidden");$("appView").classList.add("hidden");$("logoutBtn").classList.add("hidden");$("userLabel").textContent=""}});
+function pageHead(title,desc,extra=""){return `<div class="panel"><div class="row between"><div><h1>${title}</h1><div class="muted">${desc}</div></div>${extra}</div></div>`}
+function field(label,id,placeholder="",type="text",value=""){return `<div class="field"><label>${label}</label><input id="${id}" type="${type}" placeholder="${placeholder}" value="${esc(value)}"></div>`}
+function selectField(label,id,opts){return `<div class="field"><label>${label}</label><select id="${id}">${opts}</select></div>`}
+function studentOptions(selected=""){return `<option value="">Seleccionar estudiante</option>`+data.students.map(s=>`<option value="${esc(s.id)}" ${s.id===selected?"selected":""}>${esc(s.name)}</option>`).join("")}
+function empty(msg){return `<div class="empty">${msg}</div>`}
+function render(){
+ const c=$("pageContent");
+ if(page==="home"){
+ const avg=data.grades.length?data.grades.reduce((s,g)=>s+Number(g.score||0),0)/data.grades.length:0;
+ c.innerHTML=pageHead("Panel académico","Resumen de los registros del colegio activo.")+`<div class="grid3"><div class="stat"><span class="muted">Estudiantes</span><b>${data.students.length}</b></div><div class="stat"><span class="muted">Registros de notas</span><b>${data.grades.length}</b></div><div class="stat"><span class="muted">Promedio registrado</span><b>${avg.toFixed(2)}</b></div></div><div class="panel" style="margin-top:15px"><h2>Actividad reciente</h2><div class="list">${[...data.grades.map(x=>({...x,kind:"Calificación"})),...data.attendance.map(x=>({...x,kind:"Asistencia"})),...data.tasks.map(x=>({...x,kind:"Tarea"})),...data.observations.map(x=>({...x,kind:"Observación"}))].sort((a,b)=>(b.date||"").localeCompare(a.date||"")).slice(0,7).map(x=>`<div class="item"><div><b>${esc(x.kind)} · ${esc(studentName(x.studentId))}</b><div class="sub">${esc(x.title||x.subject||x.status||x.note||"")} · ${esc(x.date||"")}</div></div><span class="tag">${esc(x.kind)}</span></div>`).join("")||empty("Todavía no hay actividad registrada.")}</div></div>`;
+ }
+ if(page==="students"){
+ c.innerHTML=pageHead("Estudiantes","Registra y administra a los estudiantes.")+`<div class="panel"><h2>Agregar estudiante</h2><div class="grid">${field("Nombre completo","stName","Nombre y apellido")}${field("Curso / grado","stCourse","Ej. 8.º grado")}${field("Sección","stSection","Ej. A")}${field("Identificador (opcional)","stCode","N.º de lista")}</div><button id="saveStudent" style="margin-top:13px">Guardar estudiante</button></div><div class="panel"><h2>Listado (${data.students.length})</h2><div class="list">${data.students.map(s=>`<div class="item"><div><b>${esc(s.name)}</b><div class="sub">${esc(s.course||"Sin curso")} · ${esc(s.section||"")} ${s.code?"· "+esc(s.code):""}</div></div><div class="item-actions"><button class="secondary" data-edit-st="${s.id}">Editar</button><button class="danger" data-del="students" data-id="${s.id}">Eliminar</button></div></div>`).join("")||empty("Agrega el primer estudiante.")}</div></div>`;
+ $("saveStudent").onclick=async()=>{const name=$("stName").value.trim();if(!name)return alert("Escribe el nombre.");await save("students",{name,course:$("stCourse").value.trim(),section:$("stSection").value.trim(),code:$("stCode").value.trim()})};
+ c.querySelectorAll("[data-edit-st]").forEach(b=>b.onclick=()=>{const s=data.students.find(x=>x.id===b.dataset.editSt);const name=prompt("Nombre",s.name);if(name!==null)save("students",{...s,name:name.trim()})});
+ }
+ if(page==="grades"){
+ const scales=JSON.parse(localStorage.getItem("pf_scales")||'[{"name":"1 a 5","max":5},{"name":"1 a 10","max":10}]');
+ c.innerHTML=pageHead("Calificaciones","Registra notas con la escala que corresponda.")+`<div class="panel"><h2>Nueva calificación</h2><div class="grid">${selectField("Estudiante","grStudent",studentOptions())}${field("Materia","grSubject","Ej. Matemática")}${field("Evaluación","grTitle","Ej. Prueba del capítulo 2")}${field("Fecha","grDate","", "date",today())}${selectField("Escala","grScale",scales.map(s=>`<option value="${s.max}">${esc(s.name)} (máximo ${s.max})</option>`).join("")+`<option value="custom">Personalizada</option>`)}${field("Nota obtenida","grScore","Ej. 4","number")}</div><div class="hint" id="scaleHint">La nota debe estar dentro del máximo de la escala.</div><label>Observación de la evaluación</label><textarea id="grNote" placeholder="Criterios, fortalezas o aspectos a mejorar..."></textarea><button id="saveGrade" style="margin-top:12px">Guardar calificación</button></div><div class="panel"><h2>Historial de calificaciones</h2><div class="tablewrap"><table><thead><tr><th>Fecha</th><th>Estudiante</th><th>Materia</th><th>Evaluación</th><th>Nota</th><th>Escala</th><th></th></tr></thead><tbody>${data.grades.map(g=>`<tr><td>${esc(g.date)}</td><td>${esc(studentName(g.studentId))}</td><td>${esc(g.subject)}</td><td>${esc(g.title)}</td><td><b>${esc(g.score)}</b></td><td>${esc(g.max)}</td><td><button class="danger" data-del="grades" data-id="${g.id}">Eliminar</button></td></tr>`).join("")||`<tr><td colspan="7">No hay calificaciones.</td></tr>`}</tbody></table></div></div>`;
+ $("grScale").onchange=()=>{$("grScore").max=$("grScale").value==="custom"?"":$("grScale").value;$("scaleHint").textContent=$("grScale").value==="custom"?"Define el máximo personalizado en el campo de escala adicional.":"La nota debe estar dentro del máximo de la escala."};
+ $("saveGrade").onclick=async()=>{const max=$("grScale").value==="custom"?Number(prompt("¿Cuál es el valor máximo de esta escala?")):Number($("grScale").value),score=Number($("grScore").value);if(!$("grStudent").value||!$("grSubject").value.trim()||!$("grTitle").value.trim()||!Number.isFinite(max)||max<=0||!Number.isFinite(score)||score<0||score>max)return alert("Completa los datos y verifica que la nota esté entre 0 y el máximo.");await save("grades",{studentId:$("grStudent").value,subject:$("grSubject").value.trim(),title:$("grTitle").value.trim(),date:$("grDate").value,score,max,note:$("grNote").value.trim()})};
+ }
+ if(page==="attendance"){
+ c.innerHTML=pageHead("Asistencias","Registra presencia, ausencia, tardanza o justificación.")+`<div class="panel"><h2>Registrar asistencia</h2><div class="grid">${selectField("Estudiante","atStudent",studentOptions())}${field("Fecha","atDate","","date",today())}${selectField("Estado","atStatus",'<option>Presente</option><option>Ausente</option><option>Tardanza</option><option>Justificado</option>')}</div><label>Detalle</label><textarea id="atNote" placeholder="Motivo o comentario (opcional)"></textarea><button id="saveAttendance" style="margin-top:12px">Guardar asistencia</button></div><div class="panel"><h2>Registros</h2><div class="list">${data.attendance.map(a=>`<div class="item"><div><b>${esc(studentName(a.studentId))} · ${esc(a.status)}</b><div class="sub">${esc(a.date)} · ${esc(a.note||"")}</div></div><button class="danger" data-del="attendance" data-id="${a.id}">Eliminar</button></div>`).join("")||empty("No hay asistencias registradas.")}</div></div>`;
+ $("saveAttendance").onclick=async()=>{if(!$("atStudent").value)return alert("Selecciona un estudiante.");await save("attendance",{studentId:$("atStudent").value,date:$("atDate").value,status:$("atStatus").value,note:$("atNote").value.trim()})};
+ }
+ if(page==="tasks"){
+ c.innerHTML=pageHead("Tareas","Seguimiento de actividades y entregas.")+`<div class="panel"><h2>Nueva tarea</h2><div class="grid">${selectField("Estudiante","taStudent",studentOptions())}${field("Materia","taSubject","Materia")}${field("Tarea / actividad","taTitle","Descripción breve")}${field("Fecha asignada","taDate","","date",today())}${field("Fecha de entrega","taDue","","date",today())}${selectField("Estado","taStatus",'<option>Pendiente</option><option>Entregada</option><option>No entregada</option><option>Revisada</option>')}</div><label>Detalles</label><textarea id="taNote"></textarea><button id="saveTask" style="margin-top:12px">Guardar tarea</button></div><div class="panel"><h2>Seguimiento</h2><div class="list">${data.tasks.map(t=>`<div class="item"><div><b>${esc(t.title)}</b><div class="sub">${esc(studentName(t.studentId))} · ${esc(t.subject)} · Entrega: ${esc(t.due||"—")}</div><span class="tag">${esc(t.status)}</span></div><button class="danger" data-del="tasks" data-id="${t.id}">Eliminar</button></div>`).join("")||empty("No hay tareas registradas.")}</div></div>`;
+ $("saveTask").onclick=async()=>{if(!$("taStudent").value||!$("taTitle").value.trim())return alert("Selecciona estudiante y escribe la tarea.");await save("tasks",{studentId:$("taStudent").value,subject:$("taSubject").value.trim(),title:$("taTitle").value.trim(),date:$("taDate").value,due:$("taDue").value,status:$("taStatus").value,note:$("taNote").value.trim()})};
+ }
+ if(page==="observations"){
+ c.innerHTML=pageHead("Observaciones y comportamiento","Registra avances, fortalezas, dificultades y situaciones relevantes.")+`<div class="panel"><h2>Nueva observación</h2><div class="grid">${selectField("Estudiante","obStudent",studentOptions())}${field("Fecha","obDate","","date",today())}${selectField("Categoría","obCategory",'<option>Comportamiento</option><option>Participación</option><option>Convivencia</option><option>Fortaleza</option><option>Dificultad</option><option>Otro</option>')}</div><label>Observación</label><textarea id="obNote" placeholder="Describe hechos concretos, evitando etiquetas personales..."></textarea><button id="saveObservation" style="margin-top:12px">Guardar observación</button></div><div class="panel"><h2>Registros</h2><div class="list">${data.observations.map(o=>`<div class="item"><div><b>${esc(studentName(o.studentId))} · ${esc(o.category)}</b><div class="sub">${esc(o.date)} · ${esc(o.note)}</div></div><button class="danger" data-del="observations" data-id="${o.id}">Eliminar</button></div>`).join("")||empty("No hay observaciones registradas.")}</div></div>`;
+ $("saveObservation").onclick=async()=>{if(!$("obStudent").value||!$("obNote").value.trim())return alert("Selecciona estudiante y escribe la observación.");await save("observations",{studentId:$("obStudent").value,date:$("obDate").value,category:$("obCategory").value,note:$("obNote").value.trim()})};
+ }
+ if(page==="history"){
+ c.innerHTML=pageHead("Historial y consultas","Consulta los registros y revisa explicaciones basadas en datos guardados.")+`<div class="panel"><h2>Consultar estudiante</h2>${selectField("Estudiante","hiStudent",studentOptions())}<button id="runHistory" style="margin-top:12px">Analizar historial</button><div id="historyResult" style="margin-top:15px"></div></div>`;
+ $("runHistory").onclick=()=>{const id=$("hiStudent").value;if(!id)return alert("Selecciona un estudiante.");const gs=data.grades.filter(x=>x.studentId===id),ats=data.attendance.filter(x=>x.studentId===id),ts=data.tasks.filter(x=>x.studentId===id),obs=data.observations.filter(x=>x.studentId===id);const mean=gs.length?gs.reduce((a,g)=>a+g.score/g.max*100,0)/gs.length:null;const present=ats.filter(a=>a.status==="Presente").length,abs=ats.filter(a=>a.status==="Ausente").length,late=ats.filter(a=>a.status==="Tardanza").length;const delivered=ts.filter(t=>t.status==="Entregada"||t.status==="Revisada").length;const low=gs.filter(g=>g.score/g.max<.6),high=gs.filter(g=>g.score/g.max>=.8);$("historyResult").innerHTML=`<div class="grid3"><div class="stat"><span class="muted">Notas registradas</span><b>${gs.length}</b></div><div class="stat"><span class="muted">Promedio normalizado</span><b>${mean===null?"—":mean.toFixed(1)+"%"}</b></div><div class="stat"><span class="muted">Asistencias</span><b>${ats.length}</b></div></div><div class="notice success" style="margin-top:12px"><b>Resumen basado en ${gs.length+ats.length+ts.length+obs.length} registros:</b><br>${mean===null?"Todavía no hay calificaciones para estimar el rendimiento.":mean>=80?"El promedio registrado es alto.":mean>=60?"El promedio registrado muestra un desempeño intermedio; conviene revisar cada materia.":"El promedio registrado indica que sería útil identificar contenidos que necesitan refuerzo."} ${abs?`Se registran ${abs} ausencias${late?` y ${late} tardanzas`:""}.`:"No aparecen ausencias registradas."} ${ts.length?`Se entregaron o revisaron ${delivered} de ${ts.length} tareas registradas.`:"No hay tareas registradas."}</div><h3 style="margin-top:15px">¿Qué explica las calificaciones?</h3><p>${low.length?`Hay ${low.length} calificación(es) por debajo del 60%: ${low.map(g=>esc(g.subject+" — "+g.title+" ("+g.score+"/"+g.max+")")).join("; ")}. `:"No se observan notas por debajo del 60% en los registros actuales. "}${high.length?`Se observan ${high.length} resultados iguales o superiores al 80%. `:""}${obs.length?`Las observaciones registradas incluyen: ${obs.slice(0,4).map(o=>esc(o.category+": "+o.note)).join(" | ")}.`:"No hay observaciones asociadas."}</p><p class="hint">Esta explicación resume coincidencias entre registros; no demuestra causalidad. Para atribuir una nota a una causa concreta, registra criterios, contenidos evaluados y evidencias específicas.</p><h3>Detalle de calificaciones</h3><div class="list">${gs.map(g=>`<div class="item"><div><b>${esc(g.subject)} · ${esc(g.title)}</b><div class="sub">${esc(g.date)} · ${esc(g.note||"Sin observación")}</div></div><span class="tag">${esc(g.score)}/${esc(g.max)}</span></div>`).join("")||empty("Sin calificaciones.")}</div>`};
+ }
+ if(page==="exams"){
+ c.innerHTML=pageHead("Exámenes y actividades","Crea documentos imprimibles con preguntas y ejercicios.")+`<div class="panel"><h2>Datos del documento</h2><div class="grid">${field("Título","exTitle","Ej. Evaluación de Matemática")}${field("Materia","exSubject","Materia")}${field("Curso","exCourse","Curso o grado")}${field("Fecha","exDate","","date",today())}${field("Puntaje total","exTotal","100","number")}${field("Duración","exDuration","Ej. 60 minutos")}</div><label>Instrucciones generales</label><textarea id="exInstructions" placeholder="Lee atentamente y responde..."></textarea><hr class="hr"><div class="row between"><h2>Preguntas</h2><button id="addQuestion">+ Agregar pregunta</button></div><div id="questionList"></div><div class="row" style="margin-top:15px"><button id="exportWord">Exportar a Word</button><button id="exportPdf" class="secondary">Exportar a PDF</button></div><p class="hint">Word genera un documento .doc compatible con Microsoft Word y LibreOffice. PDF abre la ventana de impresión del dispositivo; elige “Guardar como PDF”.</p></div><div class="panel"><h2>Documentos guardados</h2><div class="list">${data.exams.map(x=>`<div class="item"><div><b>${esc(x.title)}</b><div class="sub">${esc(x.subject)} · ${esc(x.date)}</div></div><div class="item-actions"><button class="secondary" data-open-ex="${x.id}">Cargar</button><button class="danger" data-del="exams" data-id="${x.id}">Eliminar</button></div></div>`).join("")||empty("Guarda tus documentos para volver a editarlos.")}</div></div>`;
+ examQuestions=[];renderQuestions();
+ $("addQuestion").onclick=()=>{examQuestions.push({text:"",type:"Desarrollo",points:1,options:["",""]});renderQuestions()};
+ $("exportWord").onclick=()=>exportDoc("word");$("exportPdf").onclick=()=>exportDoc("pdf");
+ c.querySelectorAll("[data-open-ex]").forEach(b=>b.onclick=()=>{const x=data.exams.find(z=>z.id===b.dataset.openEx);$("exTitle").value=x.title;$("exSubject").value=x.subject;$("exCourse").value=x.course;$("exDate").value=x.date;$("exTotal").value=x.total;$("exDuration").value=x.duration;$("exInstructions").value=x.instructions;examQuestions=x.questions||[];renderQuestions();window.scrollTo({top:0,behavior:"smooth"})});
+ }
+ if(page==="settings"){
+ const scales=JSON.parse(localStorage.getItem("pf_scales")||'[{"name":"1 a 5","max":5},{"name":"1 a 10","max":10}]');
+ c.innerHTML=pageHead("Configuración","Personaliza las escalas de calificación y administra tus datos.")+`<div class="panel"><h2>Escalas de calificación</h2><p class="muted">Agrega escalas que aparecerán en el formulario de calificaciones.</p><div class="grid">${field("Nombre de la escala","scName","Ej. 1 a 20")}${field("Valor máximo","scMax","20","number")}</div><button id="addScale" style="margin-top:12px">Agregar escala</button><div class="list" id="scaleList" style="margin-top:12px">${scales.map(s=>`<div class="item"><b>${esc(s.name)} · máximo ${s.max}</b><span class="pill">Disponible</span></div>`).join("")}</div></div><div class="panel"><h2>Privacidad y respaldo</h2><p>Los registros se guardan en Firestore bajo tu usuario y colegio activo. Configura las reglas de seguridad indicadas en el archivo de instrucciones antes de usar información real de estudiantes.</p><button id="exportBackup" class="secondary">Descargar copia de seguridad JSON</button><p class="hint">La copia incluye los datos del colegio activo. Guárdala en un lugar privado y seguro.</p></div>`;
+ $("addScale").onclick=()=>{const name=$("scName").value.trim(),max=Number($("scMax").value);if(!name||!Number.isFinite(max)||max<=0)return alert("Ingresa nombre y máximo válido.");scales.push({name,max});localStorage.setItem("pf_scales",JSON.stringify(scales));render()};
+ $("exportBackup").onclick=()=>download("profefacil-respaldo.json",JSON.stringify({school:schools.find(s=>s.id===schoolId)?.name,data},null,2),"application/json");
+ }
+ c.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>remove(b.dataset.del,b.dataset.id));
+}
+function renderQuestions(){
+ const q=$("questionList");if(!q)return;
+ q.innerHTML=examQuestions.map((x,i)=>`<div class="question"><div class="question-head"><b>Pregunta ${i+1}</b><button class="danger" data-qdel="${i}">Quitar</button></div><label>Enunciado</label><textarea data-qtext="${i}" placeholder="Escribe la pregunta...">${esc(x.text)}</textarea><div class="grid"><div><label>Tipo</label><select data-qtype="${i}"><option ${x.type==="Desarrollo"?"selected":""}>Desarrollo</option><option ${x.type==="Opción múltiple"?"selected":""}>Opción múltiple</option><option ${x.type==="Verdadero/Falso"?"selected":""}>Verdadero/Falso</option><option ${x.type==="Respuesta corta"?"selected":""}>Respuesta corta</option></select></div><div><label>Puntos</label><input type="number" min="0" step=".5" data-qpoints="${i}" value="${esc(x.points)}"></div></div>${x.type==="Opción múltiple"?`<label>Opciones (separadas por línea)</label><textarea data-qoptions="${i}" placeholder="Opción A&#10;Opción B">${esc((x.options||[]).join("\n"))}</textarea>`:""}</div>`).join("")||empty("Pulsa “Agregar pregunta” para comenzar.");
+ q.querySelectorAll("[data-qdel]").forEach(b=>b.onclick=()=>{examQuestions.splice(Number(b.dataset.qdel),1);renderQuestions()});
+ q.querySelectorAll("[data-qtext]").forEach(el=>el.oninput=()=>examQuestions[Number(el.dataset.qtext)].text=el.value);
+ q.querySelectorAll("[data-qtype]").forEach(el=>el.onchange=()=>{const x=examQuestions[Number(el.dataset.qtype)];x.type=el.value;renderQuestions()});
+ q.querySelectorAll("[data-qpoints]").forEach(el=>el.oninput=()=>examQuestions[Number(el.dataset.qpoints)].points=Number(el.value));
+ q.querySelectorAll("[data-qoptions]").forEach(el=>el.oninput=()=>examQuestions[Number(el.dataset.qoptions)].options=el.value.split("\n"));
+}
+function examHtml(){
+ const title=$("exTitle").value.trim()||"Examen o actividad",subject=$("exSubject").value.trim(),course=$("exCourse").value.trim(),date=$("exDate").value,total=$("exTotal").value,duration=$("exDuration").value,inst=$("exInstructions").value;
+ const questions=examQuestions.map((q,i)=>`<section style="margin:18px 0"><b>${i+1}. ${esc(q.text||"Pregunta sin título")}</b> <span>(${esc(q.points)} puntos)</span>${q.type==="Opción múltiple"?`<ol type="A">${(q.options||[]).map(o=>`<li>${esc(o)}</li>`).join("")}</ol>`:q.type==="Verdadero/Falso"?"<p>☐ Verdadero　 ☐ Falso</p>":`<p style="margin-top:26px">__________________________________________________________________</p><p>__________________________________________________________________</p>`}</section>`).join("");
+ return `<!doctype html><html><head><meta charset="utf-8"><title>${esc(title)}</title><style>body{font-family:Arial,sans-serif;color:#111;margin:35px;line-height:1.5}h1{text-align:center;font-size:22px}.meta{display:flex;justify-content:space-between;flex-wrap:wrap;border:1px solid #999;padding:10px}.line{margin:18px 0} @media print{body{margin:18mm}}</style></head><body><h1>${esc(title)}</h1><div class="meta"><span><b>Materia:</b> ${esc(subject)}</span><span><b>Curso:</b> ${esc(course)}</span><span><b>Fecha:</b> ${esc(date)}</span></div><p class="line"><b>Estudiante:</b> ____________________________________　<b>Puntaje:</b> ____ / ${esc(total)}</p><p><b>Duración:</b> ${esc(duration)}</p><p><b>Instrucciones:</b> ${esc(inst)}</p>${questions||"<p>Sin preguntas agregadas.</p>"}<p style="margin-top:30px"><b>Firma:</b> ____________________________________</p></body></html>`;
+}
+async function exportDoc(kind){
+ const title=$("exTitle").value.trim();if(!title)return alert("Escribe un título.");
+ const payload={title,subject:$("exSubject").value.trim(),course:$("exCourse").value.trim(),date:$("exDate").value,total:$("exTotal").value,duration:$("exDuration").value,instructions:$("exInstructions").value,questions:examQuestions.map(q=>({...q,options:[...(q.options||[])]}))};
+ const docHtml=examHtml();
+ try{await save("exams",payload)}catch(e){alert("No se pudo guardar en la nube: "+friendly(e));return}
+ if(kind==="word")download((title.replace(/[^\w\-]+/g,"_")||"documento")+".doc",docHtml,"application/msword;charset=utf-8");
+ else{const w=window.open("","_blank");if(!w)return alert("Permite ventanas emergentes para imprimir.");w.document.open();w.document.write(docHtml);w.document.close();w.onload=()=>{w.focus();w.print()}}
+}
+function download(name,content,mime){const a=document.createElement("a"),url=URL.createObjectURL(new Blob([content],{type:mime}));a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500)}
+</script>
+</body>
+</html>
